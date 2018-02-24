@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.udemy.cursomc.domain.Categoria;
 import com.udemy.cursomc.domain.Cidade;
+import com.udemy.cursomc.domain.Cliente;
+import com.udemy.cursomc.domain.Endereco;
 import com.udemy.cursomc.domain.Estado;
 import com.udemy.cursomc.domain.Produto;
+import com.udemy.cursomc.domain.enums.TipoCliente;
 import com.udemy.cursomc.repositories.CategoriaRepository;
 import com.udemy.cursomc.repositories.CidadeRepository;
+import com.udemy.cursomc.repositories.ClienteRepository;
+import com.udemy.cursomc.repositories.EnderecoRepository;
 import com.udemy.cursomc.repositories.EstadoRepository;
 import com.udemy.cursomc.repositories.ProdutoRepository;
 
@@ -30,6 +35,12 @@ public class CursomcApplication implements CommandLineRunner{
 	
 	@Autowired
 	private EstadoRepository estadoRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired 
+	private EnderecoRepository enderecoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -55,6 +66,9 @@ public class CursomcApplication implements CommandLineRunner{
 		
 		cat1.getProdutos().addAll(Arrays.asList(p1, p2, p3));
 		cat2.getProdutos().addAll(Arrays.asList(p2));
+
+		categoriaRepository.save(Arrays.asList(cat1, cat2));
+		produtosRepository.save(Arrays.asList(p1, p2, p3));
 		
 		p1.getCategorias().addAll(Arrays.asList(cat1));
 		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
@@ -63,12 +77,21 @@ public class CursomcApplication implements CommandLineRunner{
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est2.getCidades().addAll(Arrays.asList(c3, c3));
 		
-		
-		categoriaRepository.save(Arrays.asList(cat1, cat2));
-		produtosRepository.save(Arrays.asList(p1, p2, p3));
-		
 		estadoRepository.save(Arrays.asList(est1, est2));
 		cidadeRepository.save(Arrays.asList(c1, c2, c3));
+
+		Cliente cli1 = new Cliente (null, "Maria Silva", "maria@maria.com.tr", "51189178249", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("1234355","34357822"));
+		
+		Endereco e1 = new Endereco (null,"Rua das Flores", "309", "Apto 103", "Jardim", "9898797", cli1, c1);
+		Endereco e2 = new Endereco (null, "Av. Matos", "105", "sala 2018", "Centro", "09809809", cli1, c2);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		
+		clienteRepository.save(Arrays.asList(cli1));
+		
+		enderecoRepository.save(Arrays.asList(e1,e2));
+		
 	}
 	
 	
