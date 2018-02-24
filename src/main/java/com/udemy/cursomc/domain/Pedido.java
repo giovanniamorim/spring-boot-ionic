@@ -3,10 +3,12 @@ package com.udemy.cursomc.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Pedido implements Serializable{
@@ -19,6 +21,7 @@ public class Pedido implements Serializable{
 	
 	private Date instante;
 	
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
 	private Pagamento pagamento;
 	
 	private Pedido pedido;
