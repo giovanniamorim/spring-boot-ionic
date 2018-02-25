@@ -11,14 +11,14 @@ import com.udemy.cursomc.services.exceptions.ObjectNotFoundException;
 public class PedidoService {
 
 	@Autowired
-	private PedidoRepository categoriaRepository;
+	private PedidoRepository pedidoRepository;
 	
-	public Pedido buscar(Integer id) {
-		Pedido obj = categoriaRepository.findOne(id);
-		if(obj == null) {
-			throw new ObjectNotFoundException("Não foi encontrada nenhuma categoria com o nome: " + id + " Tipo: " + Pedido.class.getName());
+	public Pedido find(Integer id) {
+		Pedido pedido = pedidoRepository.findOne(id);
+		if(pedido == null) {
+			throw new ObjectNotFoundException("Não foi encontrada nenhum pedido com o id: " + id);
 		}
 		
-		return obj;
+		return pedido;
 	}
 }

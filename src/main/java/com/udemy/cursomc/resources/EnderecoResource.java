@@ -18,8 +18,8 @@ public class EnderecoResource {
 	private EnderecoService enderecoService;
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> find(@PathVariable Integer id){
-		Endereco obj = enderecoService.buscar(id);
+	public ResponseEntity<Endereco> find(@PathVariable Integer id){
+		Endereco obj = enderecoService.find(id);
 		
 		return ResponseEntity.ok().body(obj);
 	}

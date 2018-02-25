@@ -13,7 +13,7 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
-	public Categoria buscar(Integer id) {
+	public Categoria find(Integer id) {
 		Categoria categoria = categoriaRepository.findOne(id);
 		if(categoria == null) {
 			throw new ObjectNotFoundException("Não foi encontrada nenhuma categoria com o Id: " + id + " Tipo: " + Categoria.class.getName());
@@ -23,6 +23,12 @@ public class CategoriaService {
 	}
 
 	public Categoria insert(Categoria categoria) {
+		categoria.setId(null);
+		return categoriaRepository.save(categoria);
+	}
+
+	public Categoria update(Categoria categoria) {
+		find(categoria.getId());
 		return categoriaRepository.save(categoria);
 	}
 }

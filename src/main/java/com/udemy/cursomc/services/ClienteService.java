@@ -13,12 +13,12 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository categoriaRepository;
 	
-	public Cliente buscar(Integer id) {
-		Cliente obj = categoriaRepository.findOne(id);
-		if(obj == null) {
-			throw new ObjectNotFoundException("Não foi encontrada nenhuma categoria com o nome: " + id + " Tipo: " + Cliente.class.getName());
+	public Cliente find(Integer id) {
+		Cliente cliente = categoriaRepository.findOne(id);
+		if(cliente == null) {
+			throw new ObjectNotFoundException("Não foi encontrada nenhum cliente com o id: " + id);
 		}
 		
-		return obj;
+		return cliente;
 	}
 }

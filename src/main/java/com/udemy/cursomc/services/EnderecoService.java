@@ -13,12 +13,12 @@ public class EnderecoService {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 	
-	public Endereco buscar(Integer id) {
-		Endereco obj = enderecoRepository.findOne(id);
-		if(obj == null) {
-			throw new ObjectNotFoundException("Não foi encontrado o endereço com o id: " + id + ". Tipo: " + Endereco.class.getName());
+	public Endereco find(Integer id) {
+		Endereco endereco = enderecoRepository.findOne(id);
+		if(endereco == null) {
+			throw new ObjectNotFoundException("Não foi encontrado o endereço com o id: " + id);
 		}
-		return obj;
+		return endereco;
 	}
 
 }
