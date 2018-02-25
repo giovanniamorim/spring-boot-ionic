@@ -1,10 +1,12 @@
 package com.udemy.cursomc.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.udemy.cursomc.domain.Categoria;
 import com.udemy.cursomc.repositories.CategoriaRepository;
+import com.udemy.cursomc.services.exceptions.DataIntegrityException;
 import com.udemy.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -16,7 +18,7 @@ public class CategoriaService {
 	public Categoria find(Integer id) {
 		Categoria categoria = categoriaRepository.findOne(id);
 		if(categoria == null) {
-			throw new ObjectNotFoundException("Não foi encontrada nenhuma categoria com o Id: " + id + " Tipo: " + Categoria.class.getName());
+			throw new ObjectNotFoundException("Não foi encontrada nenhuma categoria com o Id: " + id);
 		}
 		
 		return categoria;
@@ -30,5 +32,15 @@ public class CategoriaService {
 	public Categoria update(Categoria categoria) {
 		find(categoria.getId());
 		return categoriaRepository.save(categoria);
+	}
+
+	public void delete(Integer id) {
+		find(id);
+		try {
+			categoriaRepository.delete(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivel excluir uma categoria que possui produtos cadastrados.");
+		}
+		
 	}
 }
