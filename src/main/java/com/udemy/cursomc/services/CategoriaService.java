@@ -14,11 +14,15 @@ public class CategoriaService {
 	private CategoriaRepository categoriaRepository;
 	
 	public Categoria buscar(Integer id) {
-		Categoria obj = categoriaRepository.findOne(id);
-		if(obj == null) {
-			throw new ObjectNotFoundException("Não foi encontrada nenhuma categoria com o nome: " + id + " Tipo: " + Categoria.class.getName());
+		Categoria categoria = categoriaRepository.findOne(id);
+		if(categoria == null) {
+			throw new ObjectNotFoundException("Não foi encontrada nenhuma categoria com o Id: " + id + " Tipo: " + Categoria.class.getName());
 		}
 		
-		return obj;
+		return categoria;
+	}
+
+	public Categoria insert(Categoria categoria) {
+		return categoriaRepository.save(categoria);
 	}
 }
