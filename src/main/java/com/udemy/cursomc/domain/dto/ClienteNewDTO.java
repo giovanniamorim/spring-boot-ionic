@@ -2,6 +2,13 @@ package com.udemy.cursomc.domain.dto;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.udemy.cursomc.services.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -9,17 +16,32 @@ public class ClienteNewDTO implements Serializable{
 	public ClienteNewDTO() {
 	}
 	
+	@NotEmpty(message = "O nome é obrigatório")
+	@Length(min = 5, max= 120, message = "O nome deve ter entre 5 e 120 caracteres")
 	private String nome;
+	
+	@NotEmpty(message = "O email é obrigatório")
+	@Email(message = "O email não é válido")
 	private String email;
+	
+	@NotEmpty(message = "O CPF/CNPF é obrigatório")
 	private String cpfOuCnpj;
+	
 	private Integer tipo;
 	
+	@NotEmpty(message = "O logradouro é obrigatório")
 	private String logradouro;
+	
+	@NotEmpty(message = "O número é obrigatório")
 	private String numero;
+	
 	private String complemento;
 	private String bairro;
+	
+	@NotEmpty(message = "O CEP é obrigatório")
 	private String cep;
 	
+	@NotEmpty(message = "O telefone é obrigatório")
 	private String telefone1;
 	private String telefone2;
 	private String telefone3;
