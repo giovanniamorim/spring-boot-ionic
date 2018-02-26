@@ -10,9 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.udemy.cursomc.domain.Categoria;
-import com.udemy.cursomc.domain.Cliente;
 import com.udemy.cursomc.domain.dto.CategoriaDTO;
-import com.udemy.cursomc.domain.dto.ClienteDTO;
 import com.udemy.cursomc.repositories.CategoriaRepository;
 import com.udemy.cursomc.services.exceptions.DataIntegrityException;
 import com.udemy.cursomc.services.exceptions.ObjectNotFoundException;
