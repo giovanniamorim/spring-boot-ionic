@@ -31,6 +31,8 @@ public class Cliente implements Serializable{
 	
 	private Integer tipo;
 	
+	private String email;
+	
 	@OneToMany(mappedBy="cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
@@ -51,7 +53,7 @@ public class Cliente implements Serializable{
 		this.id = id;
 		this.nome = nome;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipo = tipo.getCod();
+		this.tipo = (tipo == null) ? null : tipo.getCod();
 	}
 
 	
@@ -86,6 +88,14 @@ public class Cliente implements Serializable{
 	public void setTipo(TipoCliente tipo) {
 		this.tipo = tipo.getCod();
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public List<Endereco> getEnderecos() {
 		return enderecos;
@@ -114,6 +124,8 @@ public class Cliente implements Serializable{
 	public void setTipo(Integer tipo) {
 		this.tipo = tipo;
 	}
+	
+	
 
 	@Override
 	public int hashCode() {
