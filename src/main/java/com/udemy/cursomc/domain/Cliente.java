@@ -90,9 +90,9 @@ public class Cliente implements Serializable{
 		return TipoCliente.toEnum(tipo);
 	}
 
-	public void setTipo(TipoCliente tipo) {
-		this.tipo = tipo.getCod();
-	}
+//	public void setTipo(TipoCliente tipo) {
+//		this.tipo = tipo.getCod();
+//	}
 	
 	public String getEmail() {
 		return email;
