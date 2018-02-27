@@ -9,6 +9,7 @@ import com.udemy.cursomc.domain.ItemPedido;
 import com.udemy.cursomc.domain.PagamentoComBoleto;
 import com.udemy.cursomc.domain.Pedido;
 import com.udemy.cursomc.domain.enums.EstadoPagamento;
+import com.udemy.cursomc.repositories.ClienteRepository;
 import com.udemy.cursomc.repositories.ItemPedidoRepository;
 import com.udemy.cursomc.repositories.PagamentoRepository;
 import com.udemy.cursomc.repositories.PedidoRepository;
@@ -34,6 +35,9 @@ public class PedidoService {
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
 	public Pedido find(Integer id) {
 		Pedido pedido = pedidoRepository.findOne(id);
 		if(pedido == null) {
@@ -46,6 +50,7 @@ public class PedidoService {
 	public Pedido insert(Pedido pedido) {
 		pedido.setId(null);
 		pedido.setInstante(new Date());
+		pedido.setCliente(clienteRepository.findOne(pedido.getCliente().getId()));
 		pedido.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		pedido.getPagamento().setPedido(pedido);
 		if(pedido.getPagamento() instanceof PagamentoComBoleto) {
@@ -56,10 +61,13 @@ public class PedidoService {
 		pagamentoRepository.save(pedido.getPagamento());
 		for (ItemPedido ip : pedido.getItens()) {
 			ip.setDesconto(0.0);
-			ip.setPreco(produtoRepository.findOne(ip.getProduto().getId()).getPreço());
+			ip.setProduto(produtoRepository.findOne(ip.getProduto().getId()));
+			ip.setPreco(ip.getProduto().getPreço());
 			ip.setPedido(pedido);
 		}
 		itemPedidoRepository.save(pedido.getItens());
+		
+		System.out.println(pedido);
 		
 		return pedido;
 	}
