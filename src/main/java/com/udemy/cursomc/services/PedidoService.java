@@ -38,6 +38,9 @@ public class PedidoService {
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	public Pedido find(Integer id) {
 		Pedido pedido = pedidoRepository.findOne(id);
 		if(pedido == null) {
@@ -67,7 +70,7 @@ public class PedidoService {
 		}
 		itemPedidoRepository.save(pedido.getItens());
 		
-		System.out.println(pedido);
+		emailService.sendeOrderConfirmationEmail(pedido);
 		
 		return pedido;
 	}
