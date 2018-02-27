@@ -20,6 +20,9 @@ public class ClienteNewDTO implements Serializable{
 	@Length(min = 5, max= 120, message = "O nome deve ter entre 5 e 120 caracteres")
 	private String nome;
 	
+	@NotEmpty
+	private String senha;
+	
 	@NotEmpty(message = "O email é obrigatório")
 	@Email(message = "O email não é válido")
 	private String email;
@@ -54,6 +57,14 @@ public class ClienteNewDTO implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public String getCpfOuCnpj() {
