@@ -90,7 +90,7 @@ public class ClienteService {
 	}
 	
 	public Cliente fromDTO(ClienteNewDTO clienteDTO) {
-		Cliente cliente = new Cliente(null,clienteDTO.getNome(), bc.encode(clienteDTO.getSenha()) ,clienteDTO.getEmail(), clienteDTO.getCpfOuCnpj(), null, TipoCliente.toEnum(clienteDTO.getTipo()));
+		Cliente cliente = new Cliente(null,clienteDTO.getNome(),clienteDTO.getEmail(), clienteDTO.getCpfOuCnpj(), null, TipoCliente.toEnum(clienteDTO.getTipo()), bc.encode(clienteDTO.getSenha()) );
 		Cidade cidade = cidadeRepository.findOne(clienteDTO.getCidadeId());
 		Endereco endereco = new Endereco(null, clienteDTO.getLogradouro(), clienteDTO.getNumero(), clienteDTO.getComplemento(), 
 				clienteDTO.getBairro(), clienteDTO.getCep(), cliente,  cidade);

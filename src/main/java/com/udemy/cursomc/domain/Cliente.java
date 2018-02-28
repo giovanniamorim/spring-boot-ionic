@@ -33,14 +33,14 @@ public class Cliente implements Serializable{
 	
 	private String nome;
 	
-	@JsonIgnore
-	private String senha;
-	
 	@Column(unique=true)
 	private String email;
 	private String cpfOuCnpj;
 	
 	private Integer tipo;
+	
+	@JsonIgnore
+	private String senha;
 	
 	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
@@ -63,14 +63,14 @@ public class Cliente implements Serializable{
 		addPerfil(Perfil.CLIENTE);
 	}
 
-	public Cliente(Integer id, String nome, String senha, String email, String cpfOuCnpj, String string, TipoCliente tipo) {
+	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, String string, TipoCliente tipo, String senha) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.senha = senha;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = (tipo == null) ? null : tipo.getCod();
+		this.senha = senha;
 		addPerfil(Perfil.CLIENTE);
 	}
 
