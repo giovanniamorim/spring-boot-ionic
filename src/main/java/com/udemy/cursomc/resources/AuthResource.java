@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.udemy.cursomc.domain.dto.EmailDTO;
 import com.udemy.cursomc.security.JWTUtil;
 import com.udemy.cursomc.security.UserSpringSecurity;
+import com.udemy.cursomc.services.AuthService;
 import com.udemy.cursomc.services.UserService;
 
 @RestController
@@ -18,12 +20,21 @@ public class AuthResource {
 	
 	@Autowired
 	private JWTUtil jwtUtil;
+	
+	@Autowired
+	private AuthService authService;
 
 	@PostMapping("/refresh_token")
 	public ResponseEntity<Void> refreshToken(HttpServletResponse response){
 		UserSpringSecurity user = UserService.authenticated();
 		String token = jwtUtil.generateToken(user.getUsername());
 		response.addHeader("Authorization", "Bearer " + token);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PostMapping("/forgot")
+	public ResponseEntity<Void> forgot(EmailDTO emailDto){
+		authService.sendNewPassword(emailDto.getEmail());
 		return ResponseEntity.noContent().build();
 	}
 	
