@@ -16,18 +16,18 @@ public class UserSpringSecurity implements UserDetails{
 	
 	private Integer id;
 	private String email;
-	private String senha;
 	private Collection<? extends GrantedAuthority> authorities;
+	private String senha;
 	
 	public UserSpringSecurity() {
 	}
 	
-	public UserSpringSecurity(Integer id, String email, String senha, Set<Perfil> perfis) {
+	public UserSpringSecurity(Integer id, String email, Set<Perfil> perfis, String senha ) {
 		super();
 		this.id = id;
 		this.email = email;
-		this.senha = senha;
 		this.authorities = perfis.stream().map(p -> new SimpleGrantedAuthority(p.getDescricao())).collect(Collectors.toList());
+		this.senha = senha;
 	}
 
 	public Integer getId() {

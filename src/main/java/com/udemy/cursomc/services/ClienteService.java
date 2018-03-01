@@ -15,10 +15,13 @@ import com.udemy.cursomc.domain.Cliente;
 import com.udemy.cursomc.domain.Endereco;
 import com.udemy.cursomc.domain.dto.ClienteDTO;
 import com.udemy.cursomc.domain.dto.ClienteNewDTO;
+import com.udemy.cursomc.domain.enums.Perfil;
 import com.udemy.cursomc.domain.enums.TipoCliente;
 import com.udemy.cursomc.repositories.CidadeRepository;
 import com.udemy.cursomc.repositories.ClienteRepository;
 import com.udemy.cursomc.repositories.EnderecoRepository;
+import com.udemy.cursomc.security.UserSpringSecurity;
+import com.udemy.cursomc.services.exceptions.AuthorizationException;
 import com.udemy.cursomc.services.exceptions.DataIntegrityException;
 import com.udemy.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -38,6 +41,13 @@ public class ClienteService {
 	private EnderecoRepository enderecoRepository;
 	
 	public Cliente find(Integer id) {
+		
+		//Recupera o usuário logado
+		UserSpringSecurity user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId()) ) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Cliente cliente = clienteRepository.findOne(id);
 		if(cliente == null) {
 			throw new ObjectNotFoundException("Não foi encontrada nenhum cliente com o id: " + id);
